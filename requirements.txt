@@ -4,3 +4,4 @@ pyrebase4==4.4.3
 flask==1.1.2
 opencv-python==4.0.1.23
 gunicorn==19.9.0
+requests==2.25.1
