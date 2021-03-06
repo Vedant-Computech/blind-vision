@@ -19,7 +19,7 @@ def compress_nparr(nparr):
 
 def uncompress_nparr(bytestring):
   
-    return np.load(io.BytesIO(zlib.decompress(bytestring)))
+    return np.load(io.BytesIO(zlib.decompress(bytestring)),allow_pickle=True)
 
 
 
