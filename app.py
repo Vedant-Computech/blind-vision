@@ -104,6 +104,7 @@ class YoloDetection:
     for x,y,w,h in objects_coordinates:
       angle = (((x+w/2)-(width/2))/(width/2)) *(camera_angle_of_view/2)
       objects_angles.append(angle)
+    output = {}
     for i,ob in enumerate(present_objects):
       output[ob]={"coordinates":objects_coordinates[i],"angle":objects_angles[i]}
     with open('output.json', 'w') as fp:
