@@ -24,14 +24,14 @@ def uncompress_nparr(bytestring):
 
 
 config = {
-    "apiKey": "AIzaSyBJi38TYMOf_DBRy-XA_7jKT9UckrYLIhU",
-    "authDomain": "testyolodetection.firebaseapp.com",
-    "projectId": "testyolodetection",
-    "storageBucket": "testyolodetection.appspot.com",
-    "messagingSenderId": "859745067051",
-    "appId": "1:859745067051:web:b858a4714d32408ba84a6e",
-    "measurementId": "G-JPM068SC4F",
-    "databaseURL":"https://console.firebase.google.com/project/testyolodetection/storage/testyolodetection.appspot.com/files"
+    "apiKey": "AIzaSyC-JHZJZG85fvGZeDanuyhK4161WM5fPGU",
+    "authDomain": "blind-vision-5bbf3.firebaseapp.com",
+    "projectId": "blind-vision-5bbf3",
+    "storageBucket": "blind-vision-5bbf3.appspot.com",
+    "messagingSenderId": "227861990159",
+    "appId": "1:227861990159:web:33d6c65a32d79050d54c7a",
+    "measurementId": "G-D4QETNN03T",
+    "databaseURL":"https://console.firebase.google.com/u/1/project/blind-vision-5bbf3/storage/blind-vision-5bbf3.appspot.com/files"
 }
 
 class YoloDetection:
@@ -97,7 +97,7 @@ class YoloDetection:
     self.storage.child("output.json").put("output.json")
     return present_objects,objects_coordinates,objects_angles
 
-  def getdetails(self,img,camera_angle_of_view=60):
+  def getdetails(self,img,camera_angle_of_view=62.2):
     present_objects,objects_coordinates = self.detectObjects(img)
     height,width,_ = img.shape
     objects_angles = []
@@ -127,7 +127,7 @@ def index():
 @app.route('/detectimagefromfirebase',methods=['POST'])            
 def detectimagefromfirebase():
     global yolodetect                                           
-    result = yolodetect.getdetails_from_firbase(60)
+    result = yolodetect.getdetails_from_firbase(62.2)
     return '{}\n'.format(result) 
 
 
@@ -141,7 +141,7 @@ def detectimage():
     img = uncompress_nparr( request.data)
 
     #img = cv2.resize(img, None, fx=0.4, fy=0.4)            
-    result = yolodetect.getdetails(img,60)
+    result = yolodetect.getdetails(img,62.2)
     
     return '{}\n'.format(result) 
 
