@@ -70,12 +70,14 @@ class YoloDetection:
     indices =  cv2.dnn.NMSBoxes(boxes, confidences, 0.2,0.4)
     present_objects = []
     objects_coordinates = []
+    confidences_values = []
     for i in indices:
       i = i[0]
       present_objects.append(self.classes[class_ids[i]])
       objects_coordinates.append(boxes[i])
+      confidences_values.append(confidences[i])
     
-    return present_objects,objects_coordinates
+    return present_objects,objects_coordinates,confidences_values
   
   
   def getdetails_from_firbase(self,camera_angle_of_view):
@@ -83,7 +85,7 @@ class YoloDetection:
     self.storage.child("input_image.jpg").download(path="input_image.jpg",filename='input_image.jpg')
     img = cv2.imread("input_image.jpg")
     #print("download and read",time.time()-start)
-    present_objects,objects_coordinates = self.detectObjects(img)
+    present_objects,objects_coordinates,confidences_values = self.detectObjects(img)
     height,width,_ = img.shape
     objects_angles = []
     for x,y,w,h in objects_coordinates:
@@ -91,14 +93,14 @@ class YoloDetection:
       objects_angles.append(angle)
     output = {}
     for i,ob in enumerate(present_objects):
-      output[ob]={"coordinates":objects_coordinates[i],"angle":objects_angles[i]}
+      output[ob]={"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]}
     with open('output.json', 'w') as fp:
         json.dump(output, fp)
     self.storage.child("output.json").put("output.json")
-    return present_objects,objects_coordinates,objects_angles
+    return present_objects,objects_coordinates,confidences_values,objects_angles
 
   def getdetails(self,img,camera_angle_of_view=62.2):
-    present_objects,objects_coordinates = self.detectObjects(img)
+    present_objects,objects_coordinates,confidences_values = self.detectObjects(img)
     height,width,_ = img.shape
     objects_angles = []
     for x,y,w,h in objects_coordinates:
@@ -106,14 +108,14 @@ class YoloDetection:
       objects_angles.append(angle)
     output = {}
     for i,ob in enumerate(present_objects):
-      output[ob]={"coordinates":objects_coordinates[i],"angle":objects_angles[i]}
+      output[ob]={"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]}
     with open('output.json', 'w') as fp:
         json.dump(output, fp)
     cv2.imwrite('input_image.jpg',img)
     self.storage.child('input_image.jpg').put('input_image.jpg')
     self.storage.child("output.json").put("output.json")
     
-    return present_objects,objects_coordinates,objects_angles
+    return present_objects,objects_coordinates,confidences_values,objects_angles
   
   
 
