@@ -109,6 +109,8 @@ class YoloDetection:
       output[ob]={"coordinates":objects_coordinates[i],"angle":objects_angles[i]}
     with open('output.json', 'w') as fp:
         json.dump(output, fp)
+    cv2.imwrite('input_image.jpg',img)
+    self.storage.child('input_image.jpg').put('input_image.jpg')
     self.storage.child("output.json").put("output.json")
     
     return present_objects,objects_coordinates,objects_angles
