@@ -119,7 +119,7 @@ class YoloDetection:
 
 
 
-yolodetect = YoloDetection('yolov3-tiny.weights','yolov3-tiny.cfg','coco.names',config)
+yolodetect = YoloDetection('yolov4-tiny.weights','yolov4-tiny.cfg','coco.names',config)
 
 #print(yolodetect.getdetails_from_firbase(60))
 
