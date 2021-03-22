@@ -7,6 +7,7 @@ import pyrebase
 import io
 import zlib
 from flask import Flask, request,jsonify    
+import os
 
 
 def compress_nparr(nparr):
@@ -118,10 +119,13 @@ class YoloDetection:
     return present_objects,objects_coordinates,confidences_values,objects_angles
   
   
+if "yolov4.weights" not in os.listdir():
+    r = requests.get("https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights")
+    with open('yolov4.weights', 'wb') as f:
+        f.write(r.content)
 
 
-
-yolodetect = YoloDetection('yolov4-tiny.weights','yolov4-tiny.cfg','coco.names',config)
+yolodetect = YoloDetection('yolov4.weights','yolov4.cfg','coco.names',config)
 
 #print(yolodetect.getdetails_from_firbase(60))
 
