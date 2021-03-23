@@ -94,7 +94,7 @@ class YoloDetection:
       objects_angles.append(angle)
     output = {}
     for i,ob in enumerate(present_objects):
-      output["object"+str(i+1)]={"object":ob,"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]}
+      output[str(i)]={"object":ob,"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]}
     with open('output.json', 'w') as fp:
         json.dump(output, fp)
     self.storage.child("output.json").put("output.json")
