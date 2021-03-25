@@ -92,9 +92,9 @@ class YoloDetection:
     for x,y,w,h in objects_coordinates:
       angle = (((x+w/2)-(width/2))/(width/2)) *(camera_angle_of_view/2)
       objects_angles.append(angle)
-    output = {}
+    output = []
     for i,ob in enumerate(present_objects):
-      output[str(i)]={"object":ob,"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]}
+      output.append({"object":ob,"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]})
     with open('output.json', 'w') as fp:
         json.dump(output, fp)
     self.storage.child("output.json").put("output.json")
@@ -107,9 +107,9 @@ class YoloDetection:
     for x,y,w,h in objects_coordinates:
       angle = (((x+w/2)-(width/2))/(width/2)) *(camera_angle_of_view/2)
       objects_angles.append(angle)
-    output = {}
+    output = []
     for i,ob in enumerate(present_objects):
-      output[str(i)]={"object":ob,"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]}
+      output.append({"object":ob,"coordinates":objects_coordinates[i],"confidence":confidences_values[i],"angle":objects_angles[i]})
     with open('output.json', 'w') as fp:
         json.dump(output, fp)
     cv2.imwrite('input_image.jpg',img)
